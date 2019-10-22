@@ -13,6 +13,8 @@
 import sys
 input = sys.stdin.readline
 
+
+
 # 整数を1つ、文字列を1行ずつ入力するとき
 # （入力例）
 # N
