@@ -127,6 +127,65 @@ for i in range(N):
 A = [i for i in range(N)]
 
 
+"""combinations、組み合わせ、順列"""
+from itertools import permutations, combinations,combinations_with_replacement,product
+a=['a','b','C']
+print(list(permutations(a)))
+# [('a', 'b', 'C'), ('a', 'C', 'b'), ('b', 'a', 'C'), ('b', 'C', 'a'), ('C', 'a', 'b'), ('C', 'b', 'a')]
+print(list(combinations(a,2)))
+# [('a', 'b'), ('a', 'C'), ('b', 'C')]
+print(list(combinations_with_replacement(a,3)))
+# [('a', 'a', 'a'), ('a', 'a', 'b'), ('a', 'a', 'C'), ('a', 'b', 'b'), ('a', 'b', 'C'), ('a', 'C', 'C'), ('b', 'b', 'b'), ('b', 'b', 'C'), ('b', 'C', 'C'), ('C', 'C', 'C')]
+
+
+"""bit　ビット演算"""
+from itertools import product
+a=list(product(['+','-'],repeat=3))
+print(a)
+# [('+', '+', '+'), ('+', '+', '-'), ('+', '-', '+'), ('+', '-', '-'), ('-', '+', '+'), ('-', '+', '-'), ('-', '-', '+'), ('-', '-', '-')]
+s=['5', '5', '3', '4']
+for i in a:
+    ans=s[0]+i[0]+s[1]+i[1]+s[2]+i[2]+s[3]
+    if eval(ans)==7: # 
+        print(ans+'=7')
+        # 5-5+3+4=7
+        break
+
+
+"""集計　collect"""
+from collections import Counter
+a=[2,2,2,3,4,3,1,2,1,3,1,2,1,2,2,1,2,1]
+a=Counter(a)
+for i in a.most_common(3):
+    print(i)
+    # (2, 8) # リストaの中に、２が８回出ていた、ということを出力
+    # (1, 6)
+    # (3, 3)
+
+
+"""n進数変換　１０進数から?進数に変換"""
+n = 18
+
+def convert(n, base):
+    result = ''
+    while n > 0:
+        result = str(n % base) + result
+        n //= base
+    return result
+
+print(convert(n,2))  # 18を２進数表記した、「10010」
+print(convert(n,3))  # 18を３進数表記した、「200」
+
+
+"""n進数変換　2進数から10進数に変換"""
+n = '10010'
+result = 0
+for i in range(len(n)):
+    result += int(n[i]) * (2 ** (len(n) - i -1))
+print(result) # 10010を１０進数に変換した、「18」
+
+
+
 """"""
 """各種アルゴリズム"""
 """"""
@@ -153,6 +212,14 @@ for i in range(1, 51):
         print(i, end=' ')
 
 
+"""最大公約数、最小公倍数"""
+import fractions
+a,b=map(int, input().split())
+f=fractions.gcd(a,b)
+f2=a*b//f
+print(f,f2)
+
+
 """素数判定 prime"""
 import math
 def is_prime(n):
@@ -164,4 +231,68 @@ def is_prime(n):
     return True
 
 
-"""
+"""全探索　全列挙(たいていの場合、ただの多重ループでいける)"""
+
+
+
+"""全探索　ビット内全探索"""
+# https://qiita.com/gogotealove/items/11f9e83218926211083a
+
+
+
+"""順列全探索"""
+
+
+
+"""二分探索"""
+
+
+
+"""深さ優先探索（DFS）"""
+
+
+"""幅優先探索（BFS）"""
+
+
+"""動的計画法（DP）　ナップサックDP（部分和問題・最小共通部分列などは全てこれに含まれます）"""
+
+
+"""動的計画法（DP）　区間DP"""
+
+
+"""動的計画法（DP）　bitDP"""
+
+
+"""ダイクストラ法"""
+
+
+"""ワーシャルフロイド法"""
+
+
+"""クラスカル法"""
+
+
+"""べき乗を高速に計算するアルゴリズム"""
+
+
+"""逆元を高速に計算するアルゴリズム"""
+
+
+"""累積和"""
+
+
+"""いもす法"""
+
+
+
+""""""
+"""各種データ構造"""
+""""""
+
+"""グラフ"""
+
+
+"""木"""
+
+
+"""Union-Find"""
