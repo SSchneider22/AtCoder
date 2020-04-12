@@ -1,8 +1,7 @@
-n=64
-k=-3
-bi=''
-while n!=0:
-    bi+=str(n%abs(k))
-    if k<0:n=-(-n//k)
-    else:n=n//k
-print(bi[::-1])
+tree = [[1,2],[3,4],[5,6],[7,8],[9,10],[11,12],[13,14],[],[],[],[],[],[],[],[]]
+data = [0]
+while len(data) > 0:
+    pos = data.pop(0)
+    print(pos, end=' ')
+    for i in tree[pos]:
+        data.append(i)
