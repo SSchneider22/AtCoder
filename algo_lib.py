@@ -10,8 +10,9 @@
 
 """標準入力"""
 # 必須の文章、これにすることでかなり高速化する
+# 改行コード「\n」を呼んでしまうため、文字数など、注意！！
 import sys
-input = sys.stdin.readline  # 改行コード「\n」を呼んでしまうため、文字数など、注意！！
+input = sys.stdin.readline
 
 
 # 整数を1つ、文字列を1行ずつ入力するとき
@@ -221,7 +222,7 @@ def fibonacci(n):
 
 
 """FizzBuzz"""
-for i in range(1, 51):
+for i in range(1, 51"""n+1"""):
     if (i % 3 == 0) and (i % 5 == 0):
         print('FizzBuzz', end=' ')
     elif i % 3 == 0:
