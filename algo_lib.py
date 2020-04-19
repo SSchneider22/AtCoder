@@ -19,7 +19,7 @@ input = sys.stdin.readline
 # （入力例）
 # N
 # S
-n = int(input().replace("\n",""))
+n = int(input()
 s = input().replace("\n","")
 
 # 整数を２つ、1行に空白で区切って入力するとき
@@ -110,6 +110,11 @@ c = a[2:5]
 print('a={}, b={}, c={}'.format(a, b, c))
 
 
+"""再帰呼び出し回数の上限変更 ※デフォルトが1000らしい"""
+import sys
+sys.setrecursionlimit(10**6)
+
+
 """リストの初期化"""
 # 1次元リスト
 None * N
@@ -123,6 +128,14 @@ None * N
 for a in A:
     print(a)
 
+# 以下は文字列ver
+n = str(input().replace("\n",""))
+
+if '7' in n:
+    print('Yes')
+else:
+    print('No')
+
 
 """リストへの値追加"""
 # append()は遅い
@@ -135,14 +148,87 @@ for i in range(N):
 A = [i for i in range(N)]
 
 
+"""リスト内の要素の並び替え"""
+a = [2, 5, 1, 4, 3]
+b = sorted(a)
+
+print(a)    # [2, 5, 1, 4, 3] a自体は変更なし
+print(b)    # [1, 2, 3, 4, 5]
+
+a.sort()
+print(a)    # [1, 2, 3, 4, 5] a自体がソートされている
+
+b = sorted(a, reverse=True)
+print(b)    # [5, 4, 3, 2, 1] 降順ソート
+
+
+"""大文字・小文字を考慮してソートするかしないか"""
+a = ['e', 'B', 'd', 'C', 'a']
+print(sorted(a))
+# ['B', 'C', 'a', 'd', 'e']普通にソートすると大文字，小文字それぞれでソートされます．
+print(sorted(a, key=lambda x: x.upper()))
+# ['a', 'B', 'C', 'd', 'e']比較時に大文字に変換してソートするので，結果大文字・小文字あわせてソートされます．
+
+
+
+"""二次元リストの並び替え"""
+from operator import itemgetter
+B =[[5,8], [6,10], [7,2],[4,1], [3,11],[9,0]]
+# B =[(5,8), (6,10), (7,2),(4,1), (3,11),(9,0)]
+print(sorted(B, key = itemgetter(0))) #第1変数で昇順ソートしてる
+#[(3, 11), (4, 1), (5, 8), (6, 10), (7, 2), (9, 0)]
+print(sorted(B, key = itemgetter(0),reverse=True)) #第1変数で降順ソートしてる
+#[(9, 0), (7, 2), (6, 10), (5, 8), (4, 1), (3, 11)]
+print(sorted(B, key = itemgetter(1))) #第2変数で昇順ソートしてる
+#[(9, 0), (4, 1), (7, 2), (5, 8), (6, 10), (3, 11)]
+print(sorted(B, key = itemgetter(1),reverse=True)) #第2変数で降順ソートしてる
+#[(3, 11), (6, 10), (5, 8), (7, 2), (4, 1), (9, 0)]
+
+
+"""多重キーの多次元リストの並び替え"""
+a = [(1, 'One', '1'), (1, 'One', '01'),
+     (2, 'Two', '2'), (2, 'Two', '02'),
+     (3, 'Three', '3'), (3, 'Three', '03')]
+print(sorted(a, key=lambda x: (x[1], x[2], x[0])))
+# 内部のタプルの1要素目（アルファベット），2要素目（数字），0要素目（数値）の順に比較してソート
+# [(1, 'One', '01'), (1, 'One', '1'), (3, 'Three', '03'), (3, 'Three', '3'), (2, 'Two', '02'), (2, 'Two', '2')]
+
+
+"""二次元リストの行列を入れ替える"""
+data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+print(data)  # [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+transpose = [x for x in zip(*data)]
+print(transpose)  # [(1, 4, 7), (2, 5, 8), (3, 6, 9)]
+
+
+"""和集合と積集合"""
+a = [2, 4, 6, 8]
+b = [3, 6, 9]
+
+print(list(set(a) | set(b)))  # 和集合 [2, 3, 4, 6, 8, 9]
+print(list(set(a) & set(b)))  # 積集合 [6]
+
+
+"""リストのコピー 基本deepcopyを使うこと"""
+from copy import deepcopy
+
+a = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+b = deepcopy(a)     # ディープコピー
+b[0].append(0)      # b[0]（内部のリスト）はaとは別のオブジェクト
+
+print(a)            # aに影響はない [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+print(b)            # [[1, 2, 3, 0], [4, 5, 6], [7, 8, 9]]
+
+
 """combinations、組み合わせ、順列"""
 from itertools import permutations, combinations,combinations_with_replacement,product
-a=['a','b','C']
-print(list(permutations(a)))
+tmp = ['a','b','C']
+print(list(permutations(tmp)))
 # [('a', 'b', 'C'), ('a', 'C', 'b'), ('b', 'a', 'C'), ('b', 'C', 'a'), ('C', 'a', 'b'), ('C', 'b', 'a')]
-print(list(combinations(a,2)))
+print(list(combinations(tmp, 2)))
 # [('a', 'b'), ('a', 'C'), ('b', 'C')]
-print(list(combinations_with_replacement(a,3)))
+print(list(combinations_with_replacement(tmp, 3)))
 # [('a', 'a', 'a'), ('a', 'a', 'b'), ('a', 'a', 'C'), ('a', 'b', 'b'), ('a', 'b', 'C'), ('a', 'C', 'C'), ('b', 'b', 'b'), ('b', 'b', 'C'), ('b', 'C', 'C'), ('C', 'C', 'C')]
 
 
@@ -162,13 +248,12 @@ for i in a:
 
 """集計　collect"""
 from collections import Counter
-a=[2,2,2,3,4,3,1,2,1,3,1,2,1,2,2,1,2,1]
-a=Counter(a)
-for i in a.most_common(3):
-    print(i)
-    # (2, 8) # リストaの中に、２が８回出ていた、ということを出力
-    # (1, 6)
-    # (3, 3)
+l=['a','b','b','c','b','a','c','c','b','c','b','a']
+S=Counter(l)#カウンタークラスが作られる。S=Counter({'b': 5, 'c': 4, 'a': 3})
+print(S.most_common(2)) #[('b', 5), ('c', 4)]
+print(S.keys()) #dict_keys(['a', 'b', 'c'])
+print(S.values()) #dict_values([3, 5, 4])
+print(S.items()) #dict_items([('a', 3), ('b', 5), ('c', 4)])
 
 
 """n進数変換　１０進数から?進数に変換"""
@@ -192,6 +277,13 @@ for i in range(len(n)):
     result += int(n[i]) * (2 ** (len(n) - i -1))
 print(result) # 10010を１０進数に変換した、「18」
 
+# 2進数、10進数、16進数については以下でも可能
+print(bin(255))                 # 10進数 -> 2進数
+print(hex(255))                 # 10進数 -> 16進数
+
+# 10進数への変換はint()関数の第2引数に基数を渡して行います．
+print(int('0b11111111', 2))     # 2進数 -> 10進数
+print(int('0xff', 16))          # 16進数 -> 10進数
 
 
 """アルファベット"""
@@ -202,10 +294,54 @@ print(al)
 """複数の文字列を置換"""
 S='54IZSB'
 S = S.translate(str.maketrans("ODIZSB","001258"))
-print(S)
+print(S) # 541258
 
 
+"""大文字・小文字への変換"""
+b = 'aBCdEfg'
+print(b.upper()) # ABCDEFG
+print(b.lower()) # abcdefg
 
+
+"""文字列の反転"""
+s = 'ABCDEFG'
+print(s[::-1]) # GFEDCBA
+
+
+"""dropwhileとtakewhile"""
+# dropwhileは先頭から与えられた条件が真である限り除外して，それ以降の要素を戻します．takewhileはその逆で先頭から与えられた条件が真であるところまでの要素を戻します．
+from itertools import dropwhile, takewhile
+a = [3, 6, 1, 7, 2, 5]
+b = dropwhile(lambda x: x != 1, a)  # 1が出るまでを除外する
+print(list(b)) # [1, 7, 2, 5]
+c = takewhile(lambda x: x != 1, a)  # 1が出るまでを取り出す
+print(list(c)) # [3, 6]
+
+
+"""groupby"""
+# 連続する要素をグループ化します．ただし同じ要素でも連続していないものはグループ化しません．
+from itertools import groupby
+
+a = [1, 1, 2, 3, 3, 3, 1, 2, 2]
+
+for key, value in groupby(a):
+    print(key, list(value))
+
+# 1 [1, 1]
+# 2 [2]
+# 3 [3, 3, 3]
+# 1 [1]
+# 2 [2, 2]
+
+# 先頭から順に、keyに2の余りを算出するラムダを指定して，奇数・偶数ごとにグループ化
+from itertools import groupby
+a = [1, 3, 2, 4, 3, 1, 1, 2, 4]
+for key, value in groupby(a, key=lambda x: x % 2):
+    print(key, list(value))
+# 1 [1, 3]
+# 0 [2, 4]
+# 1 [3, 1, 1]
+# 0 [2, 4]
 
 """"""
 """各種アルゴリズム"""
@@ -247,6 +383,12 @@ def gcd(a, b):
     return a
 print(gcd(1274,975))
 
+# 最大公約数　複数Ver
+import math
+from functools import reduce
+def gcd(*numbers):
+    return reduce(math.gcd, numbers)
+
 
 """素数判定 prime"""
 import math
@@ -273,10 +415,6 @@ def prime_decomposition(n):
     return table
 
 
-"""複数の文字列を置換"""
-S='54IZSB'
-S = S.translate(str.maketrans("ODIZSB","001258"))
-print(S)
 
 
 """全探索　全列挙(たいていの場合、ただの多重ループでいける)"""
@@ -292,7 +430,9 @@ print(S)
 
 
 
-"""二分探索"""
+"""二分探索 pythonだと、bisectがかなり使えそう"""
+# bisect_left(L,x) xをLに挿入できる点(の番号)を探し当てる、ただしLにxがある場合は一番左になるようにする。
+# bisect_right(L,x), bisect(L,x) xをLに挿入できる点(の番号)を探し当てる、ただしLにxがある場合は一番右になるようにする。
 
 
 """最短経路"""
@@ -461,13 +601,35 @@ def pow_k(x, n):
 
     return K * x
 
+"""nCrを高速に計算する"""
+from functools import reduce
+
+numerator = reduce(lambda x, y: x * y % mod, [n - r + k + 1 for k in range(r)])
+denominator = reduce(lambda x, y: x * y % mod, [k + 1 for k in range(r)])
+
+
 """逆元を高速に計算するアルゴリズム"""
+# https://cocoinit23.com/ncr-mod-1000000007/
+# すべて累積した後に10^9+7でわると、計算ができない場合に用いる。
+# （例）
+# nCr mod 1000000007 の場合、
+# 分母 denominator で割り算してmodを取ることと、
+# denominator^(1000000007-2)を掛け算してmodを取ることは等しくなる。
+numerator * pow(denominator, mod - 2, mod) % mod
+
+
+# n^mをpで割ったあまりを求める
+pow(n,m,p)
+
+# pが素数の時、nのmod pでの逆元はフェルマーの小定理より
+pow(n,p-2,p)
 
 
 """累積和"""
-a=list(range(1,30))
-a2=[0]
-for i in a:a2.append(a2[-1]+i)
+from itertools import accumulate
+A=[1,4,3,4,6,5]
+print(list(accumulate(A))) #[1, 5, 8, 12, 18, 23]
+# itertoolsの戻り値はイテレータとなっているので必要に応じてlist化します．
 
 
 """拡張ユークリッド互除法"""
@@ -494,12 +656,41 @@ def egcd(a, b):
 
 
 """スタック"""
+stack = [1,2,3,4]
+# push
+stack.append(5)  # stack = [1,2,3,4,5]
+# pop
+stack.pop()  # stack = [1,2,3,4]
 
 
 """キュー"""
+from collections import deque
+
+l = [0,1,2,3]
+q = deque(l)
+q.append(4)  # 後ろから4を挿入, l=deque([0,1,2,3,4])
+q.appendleft(5)  # 前から5を挿入, l=deque([5,0,1,2,3,4])
+x = q.pop()  # 後ろの要素を取り出す, x=4, l=deque([5,0,1,2,3])
+y = q.popleft()  # 前の要素を取り出す, y=5, l = deque([0,1,2,3])
 
 
 """ヒープ"""
+# 木構造で構成され、子ノードの値は親ノードよりも、「常に大きいか等しい」or「常に小さいか等しい」もの
+# また、各ノードが最大で２つの子ノードを持つものを二分ヒートという。
+# プライオリティーキューのことです(Pythonだとヒープキューっていうらしい)。プライオリティーキューとは
+# - 計算量O(logN)O(log⁡N)で要素を挿入
+# - 計算量O(logN)O(log⁡N)で最小値を取り出す
+# ができるデータ構造です。最短経路を求めるダイクストラ法でお世話になります。
+
+from heapq import heappop,heappush
+L=[3,0,2,5,7,2]
+H=[]
+for l in L:
+    heappush(H,l)
+print(H) #[0, 3, 2, 5, 7, 2]
+print(heappop(H)) #0
+print(heappop(H)) #2
+print(heappop(H)) #2
 
 
 """木：NN 頂点 N−1N−1 辺の連結なグラフ"""
