@@ -1,3 +1,15 @@
+n,k = map(int, input().split())
+
+ans = 0
+mod = 10**9+7
+
+for i in range(k,n+2):
+    ans += int((n*(n+1)/2 - (n-i)*(n-i+1)/2 - (i-1)*i/2 +1))
+
+print(ans%mod)
+
+
+"""
 import sys
 input = sys.stdin.readline
 from functools import reduce
@@ -15,3 +27,4 @@ if k-n == 1:
     exit()
 
 print(cmb(n+1))
+"""
