@@ -18,7 +18,7 @@ for i in range(len(s)):
             if cnt > ans:
                 ans = cnt
         else:
-            # print("AGCT意外です。カウント数：",cnt)
+            # print("AGCT以外です。カウント数：",cnt)
             break
 
 print(ans)
