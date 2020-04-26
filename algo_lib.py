@@ -1,6 +1,6 @@
 """早くするための基本"""
 # 「ループ」は基本的にfor。whileは遅い
-#  Atcoderで動かすときは、Pypy3使うと早い
+#  Atcoderで動かすときは、Pypy3使うと早い。ただ、文字列系は遅いかも…とのこと
 
 
 """参考URL"""
@@ -19,7 +19,7 @@ input = sys.stdin.readline
 # （入力例）
 # N
 # S
-n = int(input()
+n = int(input())
 s = input().replace("\n","")
 
 # 整数を２つ、1行に空白で区切って入力するとき
@@ -436,24 +436,7 @@ def prime_decomposition(n):
 
 
 """最短経路"""
-ys,xs=2,2
-yg,xg=4,5
-a=['########', '#......#', '#.######', '#..#...#', '#..##..#', '##.....#', '########']
-n=[(ys-1,xs-1)]
-route={n[0]:0}
-p=[[1,0],[0,1],[-1,0],[0,-1]]
-count=1
-while route.get((yg-1,xg-1),0)==0 and count != 10000:
-    n2=[]
-    for i in n:
-        for j in p:
-            np=(i[0]+j[0],i[1]+j[1])
-            if a[np[0]][np[1]]=='.' and route.get(np,-1)==-1:
-                n2.append(np)
-                route[np]=count
-    n=n2
-    count+=1
-print(n,route)　
+
 
 
 
@@ -483,34 +466,10 @@ while len(data) > 0:
 """しゃくとり：しゃくとり法とは、ある配列が与えられたときに、「その配列の区間で(配列の連続する部分列)  で、とある条件を満たすような区間」を求める時に使います。"""
 """「区間」が「尺取り虫」という伸び縮みしながら進む虫に例えられており、尺取虫が配列を先頭から最後まで条件を満たすように伸び縮みしながら進んでいくようなイメージです。"""
 
-n=int(input())
-a=list(map(int, input().split()))
-
-count=0
-right=0
-m=dict()
-for left in range(n):
-    while right<n and m.get(a[right],0)==0:
-        m[a[right]]=m.get(a[right],0)+1
-        right+=1
-    count=max(count,right-left)
-    m[a[left]]=m.get(a[left],1)-1
-print(count)
 
 
 """動的計画法（DP）　ナップサックDP（部分和問題・最小共通部分列などは全てこれに含まれます）"""
-n=6
-w=8
-weight=[2,1,3,2,1,5]
-value=[3,2,6,1,3,85]
 
-dp=[[0 for i in range(w+1)] for j in range(n+1)]
-for i in range(n):
-    for j in range(w+1):
-        if j>=weight[i] : dp[i+1][j]=max(dp[i][j-weight[i]]+value[i],dp[i][j])
-        else: dp[i+1][j]=dp[i][j]
-    print(dp[:i+2])
-print(dp[n][w]) 　
 
 """動的計画法（DP）　区間DP"""
 
@@ -518,40 +477,14 @@ print(dp[n][w]) 　
 """動的計画法（DP）　bitDP"""
 # https://qiita.com/masayoshi361/items/0be4bce77783b6013b34
 
+
 """ダイクストラ法：負のループがない2点間距離、NN 頂点 MM 辺のグラフにおける頂点 11 から各頂点への最短経路長を、O(MlogN)O(Mlog⁡N) で計算するアルゴリズム"""
-mp2=[[2, 4, 2], [3, 4, 5], [3, 2, 1], [1, 3, 2], [2, 0, 8], [0, 2, 8], [1, 2, 4], [0, 1, 3]]
 
-from heapq import heappop, heappush
-inf=float('inf')
-d=[inf for i in range(5)]
-d[0]=0
-prev=[None]*5
-p=dict()
-for i,j,k in mp2: p[i]=p.get(i,[])+[(j,k)]
-print(p)
-
-q=[]
-heappush(q,(d[0],0))
-while q:
-    print(q,d,prev)
-    du, u = heappop(q)
-    if d[u]<du: continue
-    for v,weight in p.get(u,[]):
-        alt=du+weight
-        if d[v]>alt:
-            d[v]=alt
-            prev[v]=u
-            heappush(q, (alt,v))
-
-p=[4]
-while prev[p[-1]]!=None: p.append(prev[p[-1]])
-print('最短経路',*p[::-1])
-print('最短距離',d)
 
 """ワーシャルフロイド法：すべての2点間の最短距離を求める"""
 
 n=int(input())
-#c=[[random.randint(1, 10) for i in range(n)] for i in range(n)]
+c=[[random.randint(1, 10) for i in range(n)] for i in range(n)]
 for k in range(n):
     for i in range(n):
         for j in range(n):
@@ -601,11 +534,8 @@ def pow_k(x, n):
 
     return K * x
 
-"""nCrを高速に計算する"""
-from functools import reduce
+"""二項係数nCrを高速に計算する"""
 
-numerator = reduce(lambda x, y: x * y % mod, [n - r + k + 1 for k in range(r)])
-denominator = reduce(lambda x, y: x * y % mod, [k + 1 for k in range(r)])
 
 
 """逆元を高速に計算するアルゴリズム"""
