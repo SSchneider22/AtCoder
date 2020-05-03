@@ -1,3 +1,6 @@
+# https://atcoder.jp/contests/abc077/tasks/arc084_a
+
+from bisect import bisect_left,bisect_right
 import sys
 input = sys.stdin.readline
 
@@ -11,9 +14,12 @@ sb = sorted(b)
 sc = sorted(c)
 
 ans = 0
-for i in range(len(sa)):
-    bleft = 0
-    bright = len(sb) - 1
-    while bleft <= bright:
-        mid = (bleft + bright) // 2 # "//"で、小数点以下切り捨ての割り算になる"
-        if sb[mid] == 
+for i in range(n):
+    ab = bisect_left(sa,sb[i])
+    bc = n - bisect_right(sc,sb[i])
+
+    if ab == 0:
+        continue
+    ans += ab * bc
+
+print(ans)

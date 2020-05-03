@@ -1,11 +1,20 @@
+"""解くための考え"""
+# 複数の値があって、ループが必要な場合は、「ある値を固定」することをまず考える。3つの値の二部探索とか
+#
+
 """早くするための基本"""
 # 「ループ」は基本的にfor。whileは遅い。range()使うときは、第二引数の値は含まれないことに注意！！！
 #  Atcoderで動かすときは、Pypy3使うと早い。ただ、文字列系は遅いかも…とのこと
 
 
-"""参考URL"""
-# Pythonの知っておくと良い細かい処理速度の違い8個
-# https://www.kumilog.net/entry/python-speed-comp
+"""使えるライブラリ"""
+# collections：counterで要素のカウント等が出来る
+# itertools：順列、組み合わせ、リスト内での累積和などが使える。パターンの羅列を作りたいときに便利
+# bisect：二分探索で使える
+# heapq：木構造のヒープ、二分ヒープなどで使用。
+# math：
+# fractions.gcd：Pythonでの最大公約数はこれ
+
 
 
 """標準入力"""
@@ -137,7 +146,7 @@ else:
     print('No')
 
 
-"""リストへの値追加"""
+"""リストの定義"""
 # append()は遅い
 # 方法その1：値代入
 A = [None] * N
@@ -254,6 +263,11 @@ print(S.most_common(2)) #[('b', 5), ('c', 4)]
 print(S.keys()) #dict_keys(['a', 'b', 'c'])
 print(S.values()) #dict_values([3, 5, 4])
 print(S.items()) #dict_items([('a', 3), ('b', 5), ('c', 4)])
+print(S['a']) # 3
+
+intl = [1,1,1,2,2,2,2,2,2,2,3,3,3,3,4,4,4]
+ints = Counter(intl)
+print(ints[1]) # 3
 
 
 """n進数変換　１０進数から?進数に変換"""
@@ -286,12 +300,12 @@ print(int('0b11111111', 2))     # 2進数 -> 10進数
 print(int('0xff', 16))          # 16進数 -> 10進数
 
 
-"""アルファベット"""
+"""アルファベットの羅列の作成"""
 al=[chr(ord('a') + i) for i in range(26)]
 print(al)
 
 
-"""複数の文字列を置換"""
+"""複数の文字列をまとめて置換"""
 S='54IZSB'
 S = S.translate(str.maketrans("ODIZSB","001258"))
 print(S) # 541258
@@ -323,8 +337,9 @@ print(list(c)) # [3, 6]
 from itertools import groupby
 
 a = [1, 1, 2, 3, 3, 3, 1, 2, 2]
+gr = groupby(a)
 
-for key, value in groupby(a):
+for key, value in gr:
     print(key, list(value))
 
 # 1 [1, 1]
@@ -433,6 +448,8 @@ def prime_decomposition(n):
 """二分探索 pythonだと、bisectがかなり使えそう"""
 # bisect_left(L,x) xをLに挿入できる点(の番号)を探し当てる、ただしLにxがある場合は一番左になるようにする。
 # bisect_right(L,x), bisect(L,x) xをLに挿入できる点(の番号)を探し当てる、ただしLにxがある場合は一番右になるようにする。
+from bisect import bisect_left,bisect_right
+# e869120_recommend100の、20.pyあたりの二分探索問題を参考にする
 
 
 """最短経路"""
@@ -561,6 +578,11 @@ A=[1,4,3,4,6,5]
 print(list(accumulate(A))) #[1, 5, 8, 12, 18, 23]
 # itertoolsの戻り値はイテレータとなっているので必要に応じてlist化します．
 
+# 文字列でも使用可能
+s = ['ab', 'bc', 'cd']
+print(list(itertools.accumulate(s)))
+# -> ['ab', 'abbc', 'abbccd']
+
 
 """拡張ユークリッド互除法"""
 # gcd(a,b) と ax + by = gcd(a,b) の最小整数解を返す
@@ -606,7 +628,7 @@ y = q.popleft()  # 前の要素を取り出す, y=5, l = deque([0,1,2,3])
 
 """ヒープ"""
 # 木構造で構成され、子ノードの値は親ノードよりも、「常に大きいか等しい」or「常に小さいか等しい」もの
-# また、各ノードが最大で２つの子ノードを持つものを二分ヒートという。
+# また、各ノードが最大で２つの子ノードを持つものを二分ヒープという。
 # プライオリティーキューのことです(Pythonだとヒープキューっていうらしい)。プライオリティーキューとは
 # - 計算量O(logN)O(log⁡N)で要素を挿入
 # - 計算量O(logN)O(log⁡N)で最小値を取り出す

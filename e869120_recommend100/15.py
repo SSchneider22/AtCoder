@@ -1,3 +1,5 @@
+# https://atcoder.jp/contests/abc145/tasks/abc145_c
+
 from itertools import permutations, combinations,combinations_with_replacement,product
 import sys
 input = sys.stdin.readline
